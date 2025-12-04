@@ -10,6 +10,7 @@ switch ($uc)
 {
     case 'accueil' : {  include "c_accueil.php" ; break ;}
 	case 'auth' : { include "c_auth.php" ; break; }
+    case 'deconnexion' : { include "c_deconnexion.php" ; break; }
 }
 
 ?>

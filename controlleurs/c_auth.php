@@ -3,7 +3,7 @@ if (!isset($_REQUEST['action'])) {
     $action = "auth" ;
 }
 else {
-    $uc = $_REQUEST['action'] ;
+    $action = $_REQUEST['action'] ;
 }
 
 switch ($action)
@@ -18,9 +18,9 @@ switch ($action)
             $mdp = $_POST['mdp'] ;
             $verification = verifierIdentification($login, $mdp) ;
             if ($verification){
-                $_SESSION['identifiant'] = $verifcation['identifiant'] ;
-                $_SESSION['prenom'] = $verifcation['prenom'] ;
-                header("Location: vues/reussis.php") ;
+                $_SESSION['identifiant'] = $verification['identifiant'] ;
+                $_SESSION['prenom'] = $verification['prenom'] ;
+                header("Location: index.php?uc=auth&action=reussis") ;
                 exit() ;
             }
             else {
@@ -40,9 +40,26 @@ switch ($action)
     
     }   
     case 'valid_inscription' : { 
+        if (isset($_POST['pseudo'], $_POST['mdp'], $_POST['nom'], $_POST['prenom'])) {
+            $login = $_POST['pseudo'] ;
+            $mdp = password_hash($_POST['mdp'], PASSWORD_ARGON2ID) ;
+            $nom = $_POST['nom'] ;
+            $prenom = $_POST['prenom'] ;
+            $inscription = IncriptionUser($login, $mdp, $nom, $prenom) ;
+            if ($inscription){
+                header("Location: index.php?uc=auth") ;
+                exit() ;
+            }
+            else{
+                header("Location: index.php?uc=auth&action=inscription") ;
+                exit() ;
+            }
 
-        require "vues/v_valid_inscription.php" ;
-        break; 
+        }
+        else{
+            header("Location: index.php?uc=auth&action=inscription") ;
+            exit() ;
+        }
     }
     case 'reussis' :{
         require "vues/v_home.php" ;
