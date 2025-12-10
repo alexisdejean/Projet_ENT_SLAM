@@ -20,8 +20,26 @@ switch ($action)
             if ($verification){
                 $_SESSION['identifiant'] = $verification['identifiant'] ;
                 $_SESSION['prenom'] = $verification['prenom'] ;
-                header("Location: index.php?uc=auth&action=reussis") ;
-                exit() ;
+                $_SESSION['role'] = $verification['role'] ;
+                if ($_SESSION['role'] == '0' || $_SESSION['role'] == '1' || $_SESSION['role'] == '2'){
+                    if ($_SESSION['role'] == '0'){
+                        $_SESSION['role'] = "Administrateur" ;
+                    }
+                    elseif ($_SESSION['role'] == '1'){
+                        $_SESSION['role'] = "Professeur" ;
+                    }
+                    else{
+                        $_SESSION['role'] = "Eleve" ;
+                    }
+                    header("Location: index.php?uc=auth&action=reussis") ;
+                    exit() ;
+                }
+                
+                else{
+                    header("Location: index.php?uc=auth&action=auth") ;
+                    exit() ;
+                }
+
             }
             else {
                 header("Location: index.php?uc=auth&action=auth") ;
@@ -40,13 +58,15 @@ switch ($action)
     
     }   
     case 'valid_inscription' : { 
-        if (isset($_POST['pseudo'], $_POST['mdp'], $_POST['nom'], $_POST['prenom'])) {
+        if (isset($_POST['pseudo'], $_POST['mdp'], $_POST['nom'], $_POST['prenom'], $_POST['role'])) {
             $login = $_POST['pseudo'] ;
             $mdp = password_hash($_POST['mdp'], PASSWORD_ARGON2ID) ;
             $nom = $_POST['nom'] ;
             $prenom = $_POST['prenom'] ;
-            $inscription = IncriptionUser($login, $mdp, $nom, $prenom) ;
+            $role = $_POST['role'] ;
+            $inscription = IncriptionUser($login, $mdp, $nom, $prenom, $role);
             if ($inscription){
+                InsertionSelonRole($login, $role) ;
                 header("Location: index.php?uc=auth") ;
                 exit() ;
             }

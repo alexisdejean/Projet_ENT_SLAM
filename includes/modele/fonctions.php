@@ -2,7 +2,7 @@
 function verifierIdentification($loginSaisi, $mdpSaisi) {
     require "bdd.php";
 
-    $sql = "SELECT identifiant, mot_de_passe, prenom, nom
+    $sql = "SELECT identifiant, mot_de_passe, prenom, nom, role
             FROM user 
             WHERE identifiant = ?";
     $exec = $bdd->prepare($sql);
@@ -18,13 +18,30 @@ function verifierIdentification($loginSaisi, $mdpSaisi) {
 function IncriptionUser($login, $mdp, $nom, $prenom) {
     require "bdd.php";
 
-    $sql = "INSERT INTO user (identifiant, mot_de_passe, nom, prenom) 
-            VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO user (identifiant, mot_de_passe, nom, prenom, role) 
+            VALUES (?, ?, ?, ?, '2')";
     $exec = $bdd->prepare($sql);
     $exec->execute([$login, $mdp, $nom, $prenom]);
     if ($exec) {
         return true;
     }
     return false;
+}
+
+
+function InsertionSelonRole($login, $role){
+    require "bdd.php";
+    if ($role == 1){
+        $sql = "INSERT INTO prof (identifiant) VALUES (?)" ;
+    }
+    elseif ($role == 2){
+        $sql = "INSERT INTO eleve (identifiant) VALUES (?)" ;
+    }
+    $exec = $bdd->prepare($sql) ;
+    $exec->execute([$login]) ;
+    if ($exec){
+        return true ;
+    }
+    return false ;
 }
 ?>

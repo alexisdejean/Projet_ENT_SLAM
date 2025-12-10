@@ -1,0 +1,57 @@
+.formulaire{
+    float: left;
+}
+
+.image{
+    float:right; 
+    margin-right:20em; 
+    margin-top:2em; 
+    margin-bottom:2em; 
+    border-radius:15px; 
+    overflow:hidden;
+}   
+
+.accueil {
+    background-color:#056FC7;
+}
+
+.form{
+    background-color: white; 
+    border-radius: 15px; 
+    padding: 2em; 
+    margin-top: 0.1em; 
+    width: 20em;
+}
+
+.formulaire{
+    float: left; 
+    margin-top: 12em; 
+    margin-left: 10em; 
+    text-align: center; 
+    color: white;
+}
+
+.formulaire h2{
+    background-color: white; 
+    color: black; 
+    border-radius: 2em; 
+    padding: 0.1em;
+}
+
+.form input{
+    height: 2em;
+    padding: 1em; 
+    background-color: rgba(217, 217, 217, 1); 
+    border:none; 
+    border-radius:0.5em;
+}
+
+.form input[type="submit"]{
+    width: 10em;
+    height: 2.5em; 
+    margin-bottom: 0.001em; 
+    margin-top:2em; 
+    background-color: rgba(217, 217, 217, 1); 
+    border:none; 
+    border-radius:1em;
+}
