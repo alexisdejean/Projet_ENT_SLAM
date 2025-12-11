@@ -44,4 +44,25 @@ function InsertionSelonRole($login, $role){
     }
     return false ;
 }
+
+function ModificationCompte($id, $pseudo, $role, $nom, $prenom, $mdp = null) {
+    require "bdd.php"; 
+
+    if ($mdp !== null) {
+        $sql = "UPDATE utilisateurs
+                SET pseudo = ?, role = ?, nom = ?, prenom = ?, mdp = ?
+                WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        return $stmt->execute([$pseudo, $role, $nom, $prenom, $mdp, $id]);
+    }
+
+    $sql = "UPDATE utilisateurs
+            SET pseudo = ?, role = ?, nom = ?, prenom = ?
+            WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$pseudo, $role, $nom, $prenom, $id]);
+}
+    
+
+
 ?>

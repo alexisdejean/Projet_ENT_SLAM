@@ -1,6 +1,6 @@
 <?php 
 if (!isset($_REQUEST['action'])) {
-    $action = "auth" ;
+    $action = "connexion" ;
 }
 else {
     $action = $_REQUEST['action'] ;
@@ -85,4 +85,42 @@ switch ($action)
         require "vues/v_home.php" ;
         break;
     }
+    case 'modification' : {  
+        
+        require "vues/v_modifier_compte_admin.php" ;
+        break ;
+    
+    }   
+    case 'valid_modification': {
+
+    if (isset($_POST['id'], $_POST['pseudo'], $_POST['role'], $_POST['nom'], $_POST['prenom'])) {
+
+        $id = $_POST['id'];
+        $pseudo = $_POST['pseudo'];
+        $role = $_POST['role'];
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
+
+        if (!empty($_POST['mdp'])) {
+            $mdp = password_hash($_POST['mdp'], PASSWORD_ARGON2ID);
+        } else {
+            $mdp = null;
+        }
+
+        $modif = ModificationCompte($id, $pseudo, $role, $nom, $prenom, $mdp);
+
+        if ($modif) {
+            header("Location: index.php?uc=auth&action=reussis");
+            exit();
+        } else {
+            header("Location: index.php?uc=auth&action=modification&id=" . $id);
+            exit();
+        }
+
+    } else {
+        header("Location: index.php?uc=auth&action=reussis");
+        exit();
+    }
+}
+
 }
