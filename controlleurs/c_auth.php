@@ -1,6 +1,6 @@
 <?php 
 if (!isset($_REQUEST['action'])) {
-    $action = "auth" ;
+    $action = "connexion" ;
 }
 else {
     $action = $_REQUEST['action'] ;
@@ -126,5 +126,7 @@ switch ($action)
         require "vues/v_admin_comptes.php" ;
         break;
     }
+
+}
 
 }

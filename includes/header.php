@@ -1,3 +1,4 @@
+                <li><a style="margin-top:1em; background-color: white;padding : auto; border-radius: 1em; height: 1.5em; margin-top: 3em;" href="index.php?uc=auth&action=inscription">Ajouter un compte</a></li>
 <nav style="float:left; height:100%; width:10em; background-color:#056FC7; border-top-right-radius:1em; border-top-left-radius: 1em;">
     <ul class="menu"style="margin-right: 1.5em; margin-left:auto; list-style-type: none; text-align: center; ">
         <div class="photo_eleve" style="width: 6em; height:4em; margin-bottom: 2em; border-radius:1.2em; background-color:white;"></div>
