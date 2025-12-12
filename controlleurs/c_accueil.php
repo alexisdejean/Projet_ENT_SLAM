@@ -9,7 +9,7 @@ else {
 switch ($action)
 {
     case 'afficher' : {  
-        require "vues/v_accueil.php" ;
+        header("location: vues/v_accueil.php") ;
         break ;
     }
 }
