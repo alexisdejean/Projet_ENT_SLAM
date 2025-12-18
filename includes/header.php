@@ -4,12 +4,12 @@
         <div class="photo_eleve" style="width: 6em; height:4em; margin-bottom: 2em; border-radius:1.2em; background-color:white;"></div>
         <?php if (isset($_SESSION['identifiant'])) {?>
             <li style="margin-bottom:1em;padding-top:0.2em; background-color: white; padding : auto; border-radius: 1em; height: 1.5em; margin-top: 3em;"><a href="index.php?uc=auth&action=reussis" style=" color: black; text-decoration: none;">Accueil</a></li>
-            <?php if ($_SESSION['role'] == 'Administrateur') { ?>
+            <?php if ($_SESSION['role'] == 0) { ?>
                 <li style="padding-top:0.2em; margin-bottom:1em; background-color: white;padding : auto; border-radius: 1em; height: 1.5em;"><a href="index.php?uc=auth&action=inscription"style=" color: black; text-decoration: none;">Gérer Profs</a></li>
                 <li style=" padding-top:0.2em; margin-bottom:1em; background-color: white;padding : auto; border-radius: 1em; height: 1.5em;"><a href="index.php?uc=auth&action=modification" style=" color: black; text-decoration: none;">Gérer Élève</a></li>
                 <li style=" padding-top:0.2em; margin-bottom:1em; background-color: white;padding : auto; border-radius: 1em; height: 1.5em;"><a  href="index.php?uc=auth&action=modification" style=" color: black; text-decoration: none;">Gérer Classe</a></li>
                 <li style=" padding-top:0.2em; margin-bottom:1em; background-color: white;padding : auto; border-radius: 1em; height: 1.5em;"><a  href="index.php?uc=auth&action=administration_comptes" style=" color: black; text-decoration: none;">Comptes</a></li>
-            <?php } elseif ($_SESSION['role'] == 'Professeur'){ ?>
+            <?php } elseif ($_SESSION['role'] == 1){ ?>
                 <li style="padding-top:0.2em; margin-bottom:1em; background-color: white;padding : auto; border-radius: 1em; height: 1.5em; "><a  href="index.php?uc=auth&action=inscription" style=" color: black; text-decoration: none;">Gestion Classe</a></li>
                 <li style="padding-top:0.2em; margin-bottom:1em; background-color: white;padding : auto; border-radius: 1em; height: 1.5em; "><a href="index.php?uc=auth&action=inscription" style=" color: black; text-decoration: none;">Notes</a></li>
             <?php } else {?>
