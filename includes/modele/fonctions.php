@@ -15,13 +15,13 @@ function verifierIdentification($loginSaisi, $mdpSaisi) {
     return false;
 }
 
-function IncriptionUser($login, $mdp, $nom, $prenom) {
+function IncriptionUser($login, $mdp, $nom, $prenom, $role) {
     require "bdd.php";
 
     $sql = "INSERT INTO user (identifiant, mot_de_passe, nom, prenom, role) 
-            VALUES (?, ?, ?, ?, '2')";
+            VALUES (?, ?, ?, ?, ?)";
     $exec = $bdd->prepare($sql);
-    $exec->execute([$login, $mdp, $nom, $prenom]);
+    $exec->execute([$login, $mdp, $nom, $prenom, $role]);
     if ($exec) {
         return true;
     }
@@ -65,12 +65,52 @@ function ModificationCompte($pseudo, $mdp = null, $id) {
     
 }
 
+function ModificationCompteAdmin($pseudo, $mdp = null, $id, $nom, $prenom, $role) {
+    require "bdd.php"; 
+
+    if ($mdp !== null) {
+        // Mise à jour avec nouveau mot de passe
+        $sql = "UPDATE user
+                SET identifiant = ?, mot_de_passe = ?, nom = ?, prenom = ?, role = ?
+                WHERE id_user = ?";
+        $stmt = $bdd->prepare($sql);
+        return $stmt->execute([$pseudo, $mdp, $nom, $prenom, $role, $id]);
+    } else {
+        // Mise à jour sans toucher au mot de passe
+        $sql = "UPDATE user
+                SET identifiant = ?, nom = ?, prenom = ?, role = ?
+                WHERE id_user = ?";
+        $stmt = $bdd->prepare($sql);
+        return $stmt->execute([$pseudo, $nom, $prenom, $role, $id]);
+    }
+}
 function AfficherLesComptes(){
     require "bdd.php";
 
-    $sql = "SELECT nom, prenom, identifiant, role FROM user";
+    $sql = "SELECT id_user, nom, prenom, identifiant, role FROM user";
     $request = $bdd->query($sql);
     return $request->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function SupprimerCompte($idUser, $roleUser) {
+    require "bdd.php";
+    
+    // 1. Supprimer d'abord les données liées (si les tables existent)
+    if ($roleUser == 1) { // Prof
+        $stmt = $bdd->prepare("DELETE FROM prof WHERE id_prof = ?");
+        $stmt->execute([$idUser]);
+    } elseif ($roleUser == 2) { // Elève
+        /*$stmt = $bdd->prepare("DELETE FROM eleve WHERE id_eleve = ?");
+        $stmt->execute([$idUser]);*/
+    }
+
+    // 2. Supprimer l'utilisateur principal
+    $stmt = $bdd->prepare("DELETE FROM user WHERE id_user = ?");
+    $stmt->execute([$idUser]);
+
+    // Retourne true si l'utilisateur a bien été supprimé
+    return $stmt->rowCount() > 0;
+}
+
 
 ?>
